@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}Clientes — MotoGama Elite{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="page-title">CLIEN<span>TES</span></div>
+        <div class="page-subtitle">Gestión de Clientes</div>
+    </div>
+    <a href="{{ url_for('nuevo_cliente') }}" class="btn btn-primary">+ Nuevo Cliente</a>
+</div>
+
+<!-- FILTROS -->
+<div class="filter-panel">
+    <div class="filter-title">◈ Buscar Cliente</div>
+    <form method="GET">
+        <div class="filter-grid">
+            <input type="text" name="nombre" placeholder="Nombre..." value="{{ filtros.nombre }}" style="min-width:180px;">
+            <input type="text" name="documento" placeholder="Documento..." value="{{ filtros.documento }}" style="min-width:160px;">
+            <input type="text" name="telefono" placeholder="Teléfono..." value="{{ filtros.telefono }}" style="min-width:150px;">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+            <a href="{{ url_for('clientes') }}" class="btn btn-secondary">Limpiar</a>
+        </div>
+    </form>
+</div>
+
+<!-- TABLA -->
+<div class="table-wrapper">
+    <div class="table-header">
+        <div class="table-title">REGISTROS <span style="color:var(--gris-medio);font-size:1rem;">({{ clientes|length }})</span></div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Documento</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Dirección</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in clientes %}
+            <tr>
+                <td class="text-muted">{{ c.id }}</td>
+                <td><strong>{{ c.nombre }}</strong></td>
+                <td>{{ c.documento }}</td>
+                <td>{{ c.telefono }}</td>
+                <td class="text-muted">{{ c.email or '—' }}</td>
+                <td class="text-muted">{{ c.direccion or '—' }}</td>
+                <td>
+                    <div class="table-actions">
+                        <a href="{{ url_for('editar_cliente', id=c.id) }}" class="btn btn-edit">✎ Editar</a>
+                        <form method="POST" action="{{ url_for('eliminar_cliente', id=c.id) }}" class="form-delete" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">✕</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="7" class="table-empty">— No se encontraron clientes —</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

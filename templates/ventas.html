@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Ventas — MotoGama Elite{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="page-title">VEN<span>TAS</span></div>
+        <div class="page-subtitle">Historial de Transacciones</div>
+    </div>
+    <a href="{{ url_for('nueva_venta') }}" class="btn btn-primary">+ Nueva Venta</a>
+</div>
+
+<div class="table-wrapper">
+    <div class="table-header">
+        <div class="table-title">TRANSACCIONES <span style="color:var(--gris-medio);font-size:1rem;">({{ ventas|length }})</span></div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Cliente</th>
+                <th>Documento</th>
+                <th>Motocicleta</th>
+                <th>Fecha</th>
+                <th>Valor</th>
+                <th>Notas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for v in ventas %}
+            <tr>
+                <td class="text-muted">{{ v.id }}</td>
+                <td><strong>{{ v.cliente }}</strong></td>
+                <td class="text-muted">{{ v.documento }}</td>
+                <td>{{ v.marca }} {{ v.modelo }}</td>
+                <td class="text-muted">{{ v.fecha_venta }}</td>
+                <td class="precio">${{ "{:,.0f}".format(v.valor) }}</td>
+                <td class="text-muted">{{ v.notas or '—' }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="7" class="table-empty">— No hay ventas registradas —</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

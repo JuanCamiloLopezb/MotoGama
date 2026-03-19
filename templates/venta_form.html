@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Nueva Venta — MotoGama Elite{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="page-title">NUEVA <span>VENTA</span></div>
+        <div class="page-subtitle">Ventas / Registrar Transacción</div>
+    </div>
+    <a href="{{ url_for('ventas') }}" class="btn btn-secondary">← Volver</a>
+</div>
+
+<div class="form-card">
+    <form method="POST">
+        <div class="form-grid">
+            <div class="form-group full-width">
+                <label for="id_cliente">Cliente *</label>
+                <select id="id_cliente" name="id_cliente" required>
+                    <option value="">— Seleccionar cliente —</option>
+                    {% for c in clientes %}
+                    <option value="{{ c.id }}">{{ c.nombre }} — Doc: {{ c.documento }}</option>
+                    {% endfor %}
+                </select>
+                {% if not clientes %}
+                <small class="text-muted">⚠ No hay clientes registrados. <a href="{{ url_for('nuevo_cliente') }}" style="color:var(--rojo);">Registrar cliente</a></small>
+                {% endif %}
+            </div>
+
+            <div class="form-group full-width">
+                <label for="id_vehiculo">Motocicleta Disponible *</label>
+                <select id="id_vehiculo" name="id_vehiculo" required>
+                    <option value="">— Seleccionar motocicleta —</option>
+                    {% for v in vehiculos %}
+                    <option value="{{ v.id }}" data-precio="{{ v.precio }}">
+                        {{ v.marca }} {{ v.modelo }} — ${{ "{:,.0f}".format(v.precio) }}
+                    </option>
+                    {% endfor %}
+                </select>
+                {% if not vehiculos %}
+                <small class="text-muted">⚠ No hay motocicletas disponibles para venta.</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="fecha_venta">Fecha de Venta *</label>
+                <input type="date" id="fecha_venta" name="fecha_venta" required value="{{ hoy }}">
+            </div>
+
+            <div class="form-group">
+                <label for="valor_venta">Valor de Venta (COP) *</label>
+                <input type="number" id="valor_venta" name="valor" required min="0" step="1000"
+                       placeholder="Se auto-completa al seleccionar moto">
+            </div>
+
+            <div class="form-group full-width">
+                <label for="notas">Notas / Observaciones</label>
+                <textarea id="notas" name="notas" placeholder="Ej: Venta al contado, incluye accesorios..."></textarea>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" {% if not clientes or not vehiculos %}disabled{% endif %}>
+                ✓ Registrar Venta
+            </button>
+            <a href="{{ url_for('ventas') }}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+<script>
+const sel = document.getElementById('id_vehiculo');
+const inp = document.getElementById('valor_venta');
+if (sel && inp) {
+    sel.addEventListener('change', function() {
+        const opt = this.options[this.selectedIndex];
+        const precio = opt.dataset.precio;
+        if (precio) inp.value = precio;
+    });
+}
+</script>
+{% endblock %}

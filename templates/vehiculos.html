@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Inventario — MotoGama Elite{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="page-title">INVEN<span>TARIO</span></div>
+        <div class="page-subtitle">Gestión de Motocicletas</div>
+    </div>
+    <a href="{{ url_for('nuevo_vehiculo') }}" class="btn btn-primary">+ Nueva Motocicleta</a>
+</div>
+
+<!-- FILTROS -->
+<div class="filter-panel">
+    <div class="filter-title">◈ Filtrar Inventario</div>
+    <form method="GET">
+        <div class="filter-grid">
+            <input type="text" name="marca" placeholder="Marca..." value="{{ filtros.marca }}" style="min-width:150px;">
+            <input type="text" name="modelo" placeholder="Modelo..." value="{{ filtros.modelo }}" style="min-width:150px;">
+            <input type="number" name="precio_min" placeholder="Precio mínimo" value="{{ filtros.precio_min }}" style="min-width:140px;">
+            <input type="number" name="precio_max" placeholder="Precio máximo" value="{{ filtros.precio_max }}" style="min-width:140px;">
+            <select name="estado" style="min-width:140px;">
+                <option value="">Todos los estados</option>
+                <option value="disponible" {% if filtros.estado == 'disponible' %}selected{% endif %}>Disponible</option>
+                <option value="vendido" {% if filtros.estado == 'vendido' %}selected{% endif %}>Vendido</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+            <a href="{{ url_for('vehiculos') }}" class="btn btn-secondary">Limpiar</a>
+        </div>
+    </form>
+</div>
+
+<!-- TABLA -->
+<div class="table-wrapper">
+    <div class="table-header">
+        <div class="table-title">MOTOCICLETAS <span style="color:var(--gris-medio);font-size:1rem;">({{ vehiculos|length }})</span></div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Cilindraje</th>
+                <th>Color</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for v in vehiculos %}
+            <tr>
+                <td class="text-muted">{{ v.id }}</td>
+                <td><strong>{{ v.marca }}</strong></td>
+                <td>{{ v.modelo }}</td>
+                <td class="text-muted">{{ v.anio or '—' }}</td>
+                <td>{{ v.cilindraje }} cc</td>
+                <td>{{ v.color or '—' }}</td>
+                <td class="precio">${{ "{:,.0f}".format(v.precio) }}</td>
+                <td>
+                    <span class="badge badge-{{ v.estado }}">{{ v.estado }}</span>
+                </td>
+                <td>
+                    <div class="table-actions">
+                        <a href="{{ url_for('editar_vehiculo', id=v.id) }}" class="btn btn-edit">✎ Editar</a>
+                        <form method="POST" action="{{ url_for('eliminar_vehiculo', id=v.id) }}" class="form-delete" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">✕</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="9" class="table-empty">— No se encontraron motocicletas —</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

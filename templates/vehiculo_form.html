@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}{{ titulo }} — MotoGama Elite{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="page-title">{{ titulo.upper().replace(' ', '<span> ') | safe }}</div>
+        <div class="page-subtitle">Inventario / {{ titulo }}</div>
+    </div>
+    <a href="{{ url_for('vehiculos') }}" class="btn btn-secondary">← Volver</a>
+</div>
+
+<div class="form-card">
+    <form method="POST">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="marca">Marca *</label>
+                <input type="text" id="marca" name="marca" required
+                       value="{{ vehiculo.marca if vehiculo else '' }}"
+                       placeholder="Ej: Ducati, BMW, Kawasaki">
+            </div>
+            <div class="form-group">
+                <label for="modelo">Modelo *</label>
+                <input type="text" id="modelo" name="modelo" required
+                       value="{{ vehiculo.modelo if vehiculo else '' }}"
+                       placeholder="Ej: Panigale V4">
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio (COP) *</label>
+                <input type="number" id="precio" name="precio" required min="0" step="1000"
+                       value="{{ vehiculo.precio if vehiculo else '' }}"
+                       placeholder="Ej: 28500000">
+            </div>
+            <div class="form-group">
+                <label for="cilindraje">Cilindraje (cc) *</label>
+                <input type="number" id="cilindraje" name="cilindraje" required min="50"
+                       value="{{ vehiculo.cilindraje if vehiculo else '' }}"
+                       placeholder="Ej: 1103">
+            </div>
+            <div class="form-group">
+                <label for="anio">Año</label>
+                <input type="number" id="anio" name="anio" min="1990" max="2030"
+                       value="{{ vehiculo.anio if vehiculo else 2024 }}"
+                       placeholder="Ej: 2024">
+            </div>
+            <div class="form-group">
+                <label for="color">Color</label>
+                <input type="text" id="color" name="color"
+                       value="{{ vehiculo.color if vehiculo else '' }}"
+                       placeholder="Ej: Rojo, Negro">
+            </div>
+            <div class="form-group">
+                <label for="estado">Estado *</label>
+                <select id="estado" name="estado" required>
+                    <option value="disponible" {{ 'selected' if not vehiculo or vehiculo.estado == 'disponible' }}>Disponible</option>
+                    <option value="vendido" {{ 'selected' if vehiculo and vehiculo.estado == 'vendido' }}>Vendido</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                {{ '✓ Guardar Cambios' if vehiculo else '+ Registrar Motocicleta' }}
+            </button>
+            <a href="{{ url_for('vehiculos') }}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

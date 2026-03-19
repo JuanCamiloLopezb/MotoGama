@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block title %}Reportes — MotoGama Elite{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="page-title">REPOR<span>TES</span></div>
+        <div class="page-subtitle">Análisis y Estadísticas del Negocio</div>
+    </div>
+</div>
+
+<!-- BANNER INGRESOS -->
+<div class="ingresos-banner">
+    <div>
+        <div class="ingresos-label">Total de Ingresos Generados</div>
+        <div class="ingresos-value">${{ "{:,.0f}".format(total_ingresos) }}</div>
+    </div>
+    <div style="text-align:right;">
+        <div class="text-muted">Unidades vendidas</div>
+        <div style="font-family:var(--font-display);font-size:2rem;color:var(--blanco);">{{ vendidos|length }}</div>
+    </div>
+</div>
+
+<!-- VENTAS POR MARCA -->
+{% if ventas_por_marca %}
+<div class="table-wrapper" style="margin-bottom:1.5rem;">
+    <div class="table-header">
+        <div class="table-title">VENTAS POR MARCA</div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Marca</th>
+                <th>Unidades Vendidas</th>
+                <th>Total Ingresos</th>
+                <th>Participación</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in ventas_por_marca %}
+            <tr>
+                <td><strong>{{ row.marca }}</strong></td>
+                <td>{{ row.cantidad }}</td>
+                <td class="precio">${{ "{:,.0f}".format(row.total) }}</td>
+                <td>
+                    <div style="display:flex;align-items:center;gap:0.75rem;">
+                        <div style="flex:1;height:6px;background:var(--gris-oscuro);border-radius:3px;min-width:80px;">
+                            <div style="height:100%;background:var(--rojo);border-radius:3px;width:{{ (row.total / total_ingresos * 100)|int if total_ingresos > 0 else 0 }}%;"></div>
+                        </div>
+                        <span class="text-muted">{{ "%.0f"|format(row.total / total_ingresos * 100) if total_ingresos > 0 else 0 }}%</span>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- TABS -->
+<div class="report-tabs">
+    <button class="tab-btn active" data-tab="tab-disponibles">Disponibles ({{ disponibles|length }})</button>
+    <button class="tab-btn" data-tab="tab-vendidos">Vendidas ({{ vendidos|length }})</button>
+    <button class="tab-btn" data-tab="tab-historial">Historial Ventas ({{ historial|length }})</button>
+</div>
+
+<!-- TAB: DISPONIBLES -->
+<div class="tab-content active" id="tab-disponibles">
+    <table>
+        <thead>
+            <tr><th>#</th><th>Marca</th><th>Modelo</th><th>Año</th><th>Cilindraje</th><th>Precio</th><th>Color</th></tr>
+        </thead>
+        <tbody>
+            {% for v in disponibles %}
+            <tr>
+                <td class="text-muted">{{ v.id }}</td>
+                <td><strong>{{ v.marca }}</strong></td>
+                <td>{{ v.modelo }}</td>
+                <td class="text-muted">{{ v.anio or '—' }}</td>
+                <td>{{ v.cilindraje }} cc</td>
+                <td class="precio">${{ "{:,.0f}".format(v.precio) }}</td>
+                <td class="text-muted">{{ v.color or '—' }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="7" class="table-empty">— Sin unidades disponibles —</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- TAB: VENDIDOS -->
+<div class="tab-content" id="tab-vendidos">
+    <table>
+        <thead>
+            <tr><th>#</th><th>Marca</th><th>Modelo</th><th>Comprador</th><th>Fecha Venta</th><th>Valor Vendido</th></tr>
+        </thead>
+        <tbody>
+            {% for v in vendidos %}
+            <tr>
+                <td class="text-muted">{{ v.id }}</td>
+                <td><strong>{{ v.marca }}</strong></td>
+                <td>{{ v.modelo }}</td>
+                <td>{{ v.comprador }}</td>
+                <td class="text-muted">{{ v.fecha_venta }}</td>
+                <td class="precio">${{ "{:,.0f}".format(v.valor_venta) }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="table-empty">— Sin unidades vendidas —</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- TAB: HISTORIAL -->
+<div class="tab-content" id="tab-historial">
+    <table>
+        <thead>
+            <tr><th>#</th><th>Cliente</th><th>Motocicleta</th><th>Fecha</th><th>Valor</th><th>Notas</th></tr>
+        </thead>
+        <tbody>
+            {% for v in historial %}
+            <tr>
+                <td class="text-muted">{{ v.id }}</td>
+                <td><strong>{{ v.cliente }}</strong></td>
+                <td>{{ v.marca }} {{ v.modelo }}</td>
+                <td class="text-muted">{{ v.fecha_venta }}</td>
+                <td class="precio">${{ "{:,.0f}".format(v.valor) }}</td>
+                <td class="text-muted">{{ v.notas or '—' }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="table-empty">— Sin transacciones —</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
