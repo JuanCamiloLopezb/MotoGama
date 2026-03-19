@@ -1,7 +1,4 @@
-/* ═══════════════════════════════════════════════
-   MOTOGAMA ELITE — Sistema de Gestión
-   Paleta: Rojo #CC0000 · Negro #0A0A0A · Blanco #F5F5F5
-   ═══════════════════════════════════════════════ */
+
 
 :root {
     --rojo: #CC0000;
@@ -26,7 +23,6 @@
     --transition: 0.2s cubic-bezier(0.4,0,0.2,1);
 }
 
-/* ─── RESET & BASE ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
@@ -42,7 +38,7 @@ body {
     flex-direction: column;
 }
 
-/* Textura sutil de fondo */
+/* Texturs de fondo */
 body::before {
     content: '';
     position: fixed;
@@ -162,7 +158,6 @@ body::before {
 
 .nav-link.active .nav-icon { color: var(--rojo-vivo); }
 
-/* ─── FLASH MESSAGES ─── */
 .flash-container {
     position: fixed;
     top: 72px;
@@ -218,7 +213,6 @@ body::before {
 }
 .flash-close:hover { opacity: 1; }
 
-/* ─── MAIN CONTENT ─── */
 .main-content {
     flex: 1;
     padding: 2rem;
@@ -229,7 +223,6 @@ body::before {
     width: 100%;
 }
 
-/* ─── PAGE HEADER ─── */
 .page-header {
     margin-bottom: 2rem;
     padding-bottom: 1rem;
@@ -260,7 +253,6 @@ body::before {
     margin-top: 0.25rem;
 }
 
-/* ─── TARJETAS ESTADÍSTICAS ─── */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -320,7 +312,6 @@ body::before {
     opacity: 0.08;
 }
 
-/* ─── TABLA GENERAL ─── */
 .table-wrapper {
     background: var(--negro-suave);
     border: 1px solid var(--gris-borde);
@@ -392,7 +383,6 @@ tbody tr:last-child td { border-bottom: none; }
     letter-spacing: 1px;
 }
 
-/* ─── BADGES ─── */
 .badge {
     display: inline-flex;
     align-items: center;
@@ -418,7 +408,6 @@ tbody tr:last-child td { border-bottom: none; }
     border: 1px solid rgba(204,0,0,0.4);
 }
 
-/* ─── BOTONES ─── */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -484,7 +473,6 @@ tbody tr:last-child td { border-bottom: none; }
 
 .btn-sm { padding: 0.3rem 0.7rem; font-size: 0.75rem; }
 
-/* ─── FILTROS / SEARCH ─── */
 .filter-panel {
     background: var(--negro-suave);
     border: 1px solid var(--gris-borde);
@@ -510,7 +498,6 @@ tbody tr:last-child td { border-bottom: none; }
     align-items: flex-end;
 }
 
-/* ─── FORMULARIOS ─── */
 .form-card {
     background: var(--negro-suave);
     border: 1px solid var(--gris-borde);
@@ -580,14 +567,12 @@ textarea { resize: vertical; min-height: 80px; }
     flex-wrap: wrap;
 }
 
-/* ─── ACCIONES DE TABLA ─── */
 .table-actions {
     display: flex;
     gap: 0.4rem;
     align-items: center;
 }
 
-/* ─── PRECIO ─── */
 .precio {
     font-family: var(--font-ui);
     font-weight: 700;
@@ -600,7 +585,6 @@ textarea { resize: vertical; min-height: 80px; }
     color: var(--rojo);
 }
 
-/* ─── DASHBOARD HERO ─── */
 .dashboard-hero {
     position: relative;
     background: linear-gradient(135deg, var(--negro-medio) 0%, #1A0505 100%);
@@ -641,7 +625,6 @@ textarea { resize: vertical; min-height: 80px; }
     text-transform: uppercase;
 }
 
-/* ─── ÚLTIMAS VENTAS ─── */
 .recent-section {
     background: var(--negro-suave);
     border: 1px solid var(--gris-borde);
@@ -649,7 +632,6 @@ textarea { resize: vertical; min-height: 80px; }
     overflow: hidden;
 }
 
-/* ─── REPORTES ─── */
 .report-tabs {
     display: flex;
     border-bottom: 1px solid var(--gris-borde);
@@ -754,7 +736,6 @@ textarea { resize: vertical; min-height: 80px; }
     letter-spacing: 1px;
 }
 
-/* ─── UTILIDADES ─── */
 .flex { display: flex; }
 .gap-1 { gap: 0.5rem; }
 .gap-2 { gap: 1rem; }
@@ -766,7 +747,6 @@ textarea { resize: vertical; min-height: 80px; }
 .text-rojo { color: var(--rojo); }
 .divider { height: 1px; background: var(--gris-borde); margin: 1.5rem 0; }
 
-/* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {
     .navbar { padding: 0 1rem; gap: 1rem; }
     .brand-sub { display: none; }

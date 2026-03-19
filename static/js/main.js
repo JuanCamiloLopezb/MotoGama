@@ -57,7 +57,6 @@ if (vehiculoSelect && valorInput) {
     });
 }
 
-// Animate numbers in stat cards
 document.querySelectorAll('.stat-value[data-count]').forEach(el => {
     const target = parseFloat(el.dataset.count);
     const isFloat = el.dataset.float === 'true';
