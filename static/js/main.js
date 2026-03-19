@@ -1,6 +1,5 @@
 // MotoGama Elite — JS principal
 
-// Auto-dismiss flash messages
 document.querySelectorAll('.flash').forEach(flash => {
     setTimeout(() => {
         flash.style.transition = 'opacity 0.4s, transform 0.4s';
@@ -10,7 +9,6 @@ document.querySelectorAll('.flash').forEach(flash => {
     }, 4000);
 });
 
-// Confirm delete
 document.querySelectorAll('.form-delete').forEach(form => {
     form.addEventListener('submit', e => {
         if (!confirm('¿Estás seguro de que deseas eliminar este registro? Esta acción no se puede deshacer.')) {
@@ -19,7 +17,6 @@ document.querySelectorAll('.form-delete').forEach(form => {
     });
 });
 
-// Tab system for reportes
 document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         const target = btn.dataset.tab;
@@ -30,7 +27,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     });
 });
 
-// Format currency in input while typing
 document.querySelectorAll('input[name="valor"], input[name="precio"]').forEach(input => {
     input.addEventListener('input', () => {
         const raw = input.value.replace(/[^0-9.]/g, '');
@@ -38,7 +34,6 @@ document.querySelectorAll('input[name="valor"], input[name="precio"]').forEach(i
     });
 });
 
-// Auto-fill sale price from vehicle
 const vehiculoSelect = document.getElementById('id_vehiculo');
 const valorInput = document.getElementById('valor_venta');
 if (vehiculoSelect && valorInput) {
